@@ -7,16 +7,25 @@ using BandTracker.Models;
 namespace BandTracker.Models.Tests
 {
   [TestClass]
-  public class ClassTests : IDisposable
+  public class BandTests : IDisposable
   {
+    public BandTests()
+    {
+      DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=band_tracker_test;";
+    }
+
     public void Dispose()
     {
-      Class.ClearAll
+      Venue.ClearAll();
+      Band.ClearAll();
     }
+
     [TestMethod]
-    public void Method_Description_ExpectedValue()
+    public void GetAll_BEmptyAtFirst_0()
     {
-      Assert.AreEqual(var1, method(input));
+      int result = Band.GetAll().Count;
+
+      Assert.AreEqual(0, result);
     }
   }
 }
