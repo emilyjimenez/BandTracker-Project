@@ -31,6 +31,7 @@ namespace BandTracker.Controllers
       model.Add("venueBands", VenueBands);
       model.Add("allBands", AllTasks);
       return View(model);
-    }
+
+    
   }
 }
