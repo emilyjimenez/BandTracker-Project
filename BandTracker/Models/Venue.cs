@@ -115,12 +115,12 @@ namespace BandTracker.Models
 
       MySqlParameter name = new MySqlParameter();
       name.ParameterName = "@name";
-      name.Value = Name;
+      name.Value = this.Name;
       cmd.Parameters.Add(name);
 
       MySqlParameter address = new MySqlParameter();
       address.ParameterName = "@address";
-      address.Value = Address;
+      address.Value = this.Address;
       cmd.Parameters.Add(address);
 
       cmd.ExecuteNonQuery();
