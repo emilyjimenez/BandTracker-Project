@@ -21,6 +21,21 @@ namespace BandTracker.Models.Tests
     }
 
     [TestMethod]
+    public void Save_SavesToDatabase_BandList()
+    {
+      // Arrange
+      Band testBand = new Band("Blink-182", "punkrock");
+
+      // Act
+      testBand.Save();
+      List<Band> result = Band.GetAll();
+      List<Band> testList = new List<Band>{testBand};
+
+      // Assert
+      CollectionAssert.AreEqual(testList, result);
+    }
+
+    [TestMethod]
     public void GetAll_BEmptyAtFirst_0()
     {
       int result = Band.GetAll().Count;

@@ -18,22 +18,6 @@ namespace BandTracker.Models
       Id = id;
     }
 
-    public static void ClearAll()
-    {
-      MySqlConnection conn = DB.Connection();
-      conn.Open();
-
-      var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"DELETE FROM bands;";
-      cmd.ExecuteNonQuery();
-
-      conn.Close();
-      if (conn != null)
-      {
-        conn.Dispose();
-      }
-    }
-
     public void Save()
     {
       MySqlConnection conn = DB.Connection();
@@ -58,7 +42,58 @@ namespace BandTracker.Models
       conn.Close();
       if (conn != null)
       {
+        conn.Dispose();
+      }
+    }
+
+    public static Band Find(int searchId)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText =  @"SELECT * FROM bands WHERE id = @thisId;";
+
+      MySqlParameter thisId = new MySqlParameter();
+      thisId.ParameterName = "@thisId";
+      thisId.Value = searchId;
+      cmd.Parameters.Add(thisId);
+
+      int bandId = 0;
+      string bandName = "";
+      string bandGenre = "";
+
+      var rdr = cmd.ExecuteReader() as MySqlDataReader;
+      while(rdr.Read())
+      {
+        bandId = rdr.GetInt32(0);
+        bandName = rdr.GetString(1);
+        bandGenre = rdr.GetString(2);
+      }
+
+      Band foundBand = new Band(bandName, bandGenre, bandId);
+
+      conn.Close();
+      if (conn != null)
+      {
           conn.Dispose();
+      }
+      return foundBand;
+    }
+
+    public static void ClearAll()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"DELETE FROM bands;";
+      cmd.ExecuteNonQuery();
+
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
       }
     }
 
