@@ -207,7 +207,7 @@ namespace BandTracker.Models
       cmd.Parameters.Add(venueId);
 
       var rdr = cmd.ExecuteReader() as MySqlDataReader;
-      List<Band> bands = new List<Band>{};
+      List<Band> venueBands = new List<Band>{};
 
       while(rdr.Read())
       {
@@ -215,14 +215,14 @@ namespace BandTracker.Models
         string bandName = rdr.GetString(1);
         string bandGenre = rdr.GetString(2);
         Band newBand = new Band(bandName, bandGenre, bandId);
-        bands.Add(newBand);
+        venueBands.Add(newBand);
       }
       conn.Close();
       if (conn != null)
       {
           conn.Dispose();
       }
-      return bands;
+      return venueBands;
     }
 
     public void AddBand(Band newBand)

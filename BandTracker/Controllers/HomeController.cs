@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using BandTracker.Models;
+using System;
 
 namespace BandTracker.Controllers
 {
@@ -10,7 +10,8 @@ namespace BandTracker.Controllers
     [HttpGet("/")]
     public ActionResult Index()
     {
-      return View();
+      List<Band> allBands = Band.GetAll();
+      return View(allBands);
     }
 
     [HttpGet("/venues")]
@@ -19,6 +20,29 @@ namespace BandTracker.Controllers
       List<Venue> allVenues = Venue.GetAll();
       return View(allVenues);
     }
+
+    [HttpGet("/bands")]
+    public ActionResult Bands()
+    {
+      List<Band> allbands = Band.GetAll();
+      return View(allbands);
+    }
+
+    [HttpGet("/venues/{id}/bands/new")]
+    public ActionResult BandForm()
+    {
+      return View();
+    }
+
+    [HttpPost("/bands/new")]
+    public ActionResult AddBand(int id)
+    {
+      Venue Venue = Venue.Find(id);
+      Band newBand = new Band(Request.Form["band-name"], Request.Form["band-genre"]);
+      newBand.Save();
+      return View("Success");
+    }
+
 
     [HttpGet("/bands/{id}")]
     public ActionResult BandDetail(int id)
@@ -45,6 +69,7 @@ namespace BandTracker.Controllers
       model.Add("allBands", allBands);
       return View(model);
     }
+
 
     [HttpGet("/venues/new")]
     public ActionResult VenueForm()

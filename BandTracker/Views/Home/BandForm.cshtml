@@ -1,0 +1,13 @@
+@{
+    Layout = "_Layout";
+}
+<h1>To Do List</h1>
+<h2>Add new band</h2>
+<form action='/bands/new' method="post">
+  <label for="band-name">Band name:</label>
+  <input id="band-name" name="band-name" type="text">
+  <label for="band-genre">Band genre:</label>
+  <input id="band-genre" name="band-genre" type="text">
+  <button type="submit">Add</button>
+</form>
+<h4><a href="/">Return home</a></h4>
