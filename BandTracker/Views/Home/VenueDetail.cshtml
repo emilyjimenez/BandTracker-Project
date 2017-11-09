@@ -8,6 +8,7 @@
 <p>Venue Name: @Model["venue"].Name</p>
 <p>Venue Location: @Model["venue"].Address</p>
 <h4><a href='/venues/@Model["venue"].Id/update'>Update Venue</a></h4>
+<h4><a href='/venues/@Model["venue"].Id/delete'>Delete Venue</a></h4>
 <br></br>
 <p>Bands played:</p>
   @foreach (var band in @Model["venueBands"])

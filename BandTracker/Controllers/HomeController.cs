@@ -14,6 +14,7 @@ namespace BandTracker.Controllers
       return View(allBands);
     }
 
+    //LIST VENUES
     [HttpGet("/venues")]
     public ActionResult Venues()
     {
@@ -21,6 +22,7 @@ namespace BandTracker.Controllers
       return View(allVenues);
     }
 
+    //LIST BANDS
     [HttpGet("/bands")]
     public ActionResult Bands()
     {
@@ -34,6 +36,7 @@ namespace BandTracker.Controllers
       return View();
     }
 
+    //ADD BAND
     [HttpPost("/bands/new")]
     public ActionResult AddBand()
     {
@@ -48,6 +51,7 @@ namespace BandTracker.Controllers
       return View();
     }
 
+    //ADD VENUE
     [HttpPost("/venues/new/")]
     public ActionResult AddVenue()
     {
@@ -63,6 +67,7 @@ namespace BandTracker.Controllers
       return View(updateVenue);
     }
 
+    //UPDATE VENUE
     [HttpPost("/venues/{id}/update/")]
     public ActionResult UpdateVenue(int id)
     {
@@ -72,8 +77,17 @@ namespace BandTracker.Controllers
       return View("Success");
     }
 
+    //DELETE VENUE
+    [HttpGet("/venues/{id}/delete")]
+    public ActionResult DeleteVenue(int id)
+    {
+      Venue deleteVenue = Venue.Find(id);
+      deleteVenue.Delete();
+      List<Venue> allVenues = Venue.GetAll();
+      return View("Success", allVenues);
+    }
 
-
+    //BAND DETAILS
     [HttpGet("/bands/{id}")]
     public ActionResult BandDetail(int id)
     {
@@ -87,6 +101,7 @@ namespace BandTracker.Controllers
       return View(model);
     }
 
+    //VENUE DETAILS
     [HttpGet("/venues/{id}")]
     public ActionResult VenueDetail(int id)
     {
