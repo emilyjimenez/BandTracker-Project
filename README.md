@@ -9,7 +9,7 @@
 
 ## Description
 
-_Web app designed to store band and music venue information. A user can add bands/venues, and connect bands that have played at a venue, and venues that have had bands perform._
+_Web app designed to store band and music venue information. A user can add bands/venues, and connect bands that have played at a venue, and venues that have had bands perform. This app demonstrates how to work with a many-to-many relationship common in many databases._
 
 
 
@@ -32,14 +32,14 @@ _Web app designed to store band and music venue information. A user can add band
 > * CREATE TABLE venues(id serial PRIMARY KEY, name VARCHAR(255), address VARCHAR(255));
 > * CREATE TABLE bands_venues(id serial PRIMARY KEY, band_id INT, venue_id INT);
 
-**Note** _Remember to run these commands for a band_tracker_test database too!_
+***Note*** _Remember to run these commands for a band_tracker_test database too!_
 
 ## Setup/Installation Requirements
 
-1. Clone [BandTracker-Project](https://github.com/emilyjimenez/BandTracker-Project) from Github
+1. Clone [BandTracker-Project](https://github.com/emilyjimenez/BandTracker-Project) from Github in the terminal of your choice
 2. Make sure you have MAMP installed and are using .NET Core 1.1
-3. Turn servers on via MAMP, and then load band_tracker and band_tracker_test databases into the PHPmyadmin tool in MAMP
-4. Run dotnet restore and build on both the HairSalon folder and BandTracker.Tests folder, then run dotnet test on the test folder
+3. Turn servers on via MAMP, and then import the band_tracker.sql and band_tracker_test.sql database files into the PHPmyadmin tool in MAMP
+4. Run dotnet restore and build on both the BandTracker folder and BandTracker.Tests folder, then run dotnet test on the test folder
 5. After restore/build/test, run the dotnet run command on the BandTracker folder on your terminal and go to localhost5000 in your preferred web browser
 
 ## Known Bugs
