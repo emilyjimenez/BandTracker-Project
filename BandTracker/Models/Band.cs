@@ -172,5 +172,30 @@ namespace BandTracker.Models
       }
       return venues;
     }
+
+    public void AddVenue(Venue newVenue)
+   {
+     MySqlConnection conn = DB.Connection();
+     conn.Open();
+     var cmd = conn.CreateCommand() as MySqlCommand;
+     cmd.CommandText = @"INSERT INTO bands_venues (band_id, venue_id) VALUES (@BandId, @VenueId);";
+
+     MySqlParameter band_id = new MySqlParameter();
+     band_id.ParameterName = "@BandId";
+     band_id.Value = Id;
+     cmd.Parameters.Add(band_id);
+     
+     MySqlParameter venue_id = new MySqlParameter();
+     venue_id.ParameterName = "@VenueId";
+     venue_id.Value = newVenue.Id;
+     cmd.Parameters.Add(venue_id);
+
+     cmd.ExecuteNonQuery();
+     conn.Close();
+     if (conn != null)
+     {
+         conn.Dispose();
+     }
+   }
   }
 }

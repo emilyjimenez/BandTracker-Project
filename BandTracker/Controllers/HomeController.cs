@@ -28,20 +28,50 @@ namespace BandTracker.Controllers
       return View(allbands);
     }
 
-    [HttpGet("/venues/{id}/bands/new")]
+    [HttpGet("/bands/new")]
     public ActionResult BandForm()
     {
       return View();
     }
 
     [HttpPost("/bands/new")]
-    public ActionResult AddBand(int id)
+    public ActionResult AddBand()
     {
-      Venue Venue = Venue.Find(id);
       Band newBand = new Band(Request.Form["band-name"], Request.Form["band-genre"]);
       newBand.Save();
       return View("Success");
     }
+
+    [HttpGet("/venues/new")]
+    public ActionResult VenueForm()
+    {
+      return View();
+    }
+
+    [HttpPost("/venues/new/")]
+    public ActionResult AddVenue()
+    {
+      Venue newVenue = new Venue(Request.Form["venue-name"], Request.Form["venue-address"]);
+      newVenue.Save();
+      return View("Success");
+    }
+
+    [HttpGet("/venues/{id}/update")]
+    public ActionResult UpdateVenueForm(int id)
+    {
+      Venue updateVenue = Venue.Find(id);
+      return View(updateVenue);
+    }
+
+    [HttpPost("/venues/{id}/update/")]
+    public ActionResult UpdateVenue(int id)
+    {
+      Venue updateVenue = Venue.Find(id);
+      updateVenue.Update(Request.Form["update-name"], Request.Form["update-address"]);
+      List<Venue> allVenues = Venue.GetAll();
+      return View("Success");
+    }
+
 
 
     [HttpGet("/bands/{id}")]
@@ -66,23 +96,37 @@ namespace BandTracker.Controllers
       List<Band> allBands = Band.GetAll();
       model.Add("venue", selectedVenue);
       model.Add("venueBands", venueBands);
-      model.Add("allBands", allBands);
+      model.Add("bands", allBands);
       return View(model);
     }
 
-
-    [HttpGet("/venues/new")]
-    public ActionResult VenueForm()
+    // ADD BAND TO VENUE
+    [HttpPost("venues/{id}/bands/new")]
+    public ActionResult VenueAddBand(int id)
     {
-      return View();
-    }
-
-    [HttpPost("/venues/new")]
-    public ActionResult AddVenue()
-    {
-      Venue newVenue = new Venue(Request.Form["venue-name"], Request.Form["venue-address"]);
-      newVenue.Save();
+      Venue venue = Venue.Find(id);
+      Band band = Band.Find(Int32.Parse(Request.Form["band-id"]));
+      venue.AddBand(band);
       return View("Success");
     }
+
+    // ADD VENUE TO BAND
+    [HttpPost("bands/{id}/venues/new")]
+    public ActionResult BandAddVenue(int id)
+    {
+      Band band = Band.Find(id);
+      Venue venue = Venue.Find(Int32.Parse(Request.Form["venue-id"]));
+      band.AddVenue(venue);
+      return View("Success");
+    }
+
+
+
+
+
+
+
+
+
   }
 }
